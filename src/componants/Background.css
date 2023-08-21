@@ -1,0 +1,375 @@
+@import url('https://fonts.googleapis.com/css?family=Numans');
+
+html{
+  font-family: 'Numans', sans-serif;
+}
+body {
+  background: linear-gradient(rgba(4, 6, 10, 0.795), rgba(6, 9, 17, 0.9)), url(../img/bg-hero.jpg);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  height: 100%;
+}
+
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  overflow: hidden;
+
+}
+
+.card {
+  align-content: center;
+  width: 400px;
+  margin-top: 50%;
+  background-color: rgba(255, 255, 255, 0.589) !important;
+}
+
+.card-header {
+  position: relative;
+  padding: 20px 30px;
+  color: white;
+}
+
+.card-header h3 {
+  margin: 0;
+}
+
+.social_icon {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.social_icon span {
+  font-size: 60px;
+  margin-left: 10px;
+  color: #ffffffde;
+  transition: color 0.3s;
+}
+
+.social_icon span:hover {
+  color:#f7f466;
+  cursor: pointer;
+}
+
+.card-body {
+  padding: 20px 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.input-group-prepend span {
+  width: 50px;
+  background-color: #f7f466;
+  color: black;
+  border: none !important;
+}
+
+input:hover {
+  opacity: .8;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+
+.login_btn {
+  color: black;
+  background-color: #f7f466;
+  width: 100px;
+  transition: background-color 0.3s;
+}
+
+.login_btn:hover {
+  background-color: white;
+}
+
+
+.container_img {
+  position: relative;
+  overflow: hidden; /* Added to remove overflow */
+  height: 100vh;
+}
+
+.image-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  animation: moveImages 30s infinite linear;
+}
+
+.image-wrapper img{
+  width: 120px;
+  height: 120px;
+
+}
+
+@keyframes moveImages {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(calc(100vw - 100%), calc(100vh - 100%));
+  }
+}
+
+.burger,
+.pinkdonut,
+.donut,
+.lime,
+.noodles,
+.oatmeal,
+.pizza,
+.rotate-image,
+.strawberry-yogurt,
+.Pineapple,
+.toast,
+.spavlova,
+.square,
+.chickpo,
+.salmon {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  opacity: 1;
+  animation: moveImage 30s infinite linear;
+}
+
+.burger {
+  animation-name: moveburger;
+}
+
+.toast {
+    animation-name: movetoast;
+  }
+
+.pinkdonut {
+  animation-name: movepinkdonut;
+}
+
+.donut {
+  animation-name: movedonut;
+}
+
+.spavlova {
+    animation-name: movespavlova;
+}
+
+.lime {
+  animation-name: movelime;
+}
+
+.noodles {
+  animation-name: movenoodles;
+}
+
+.oatmeal {
+  animation-name: moveoatmeal;
+}
+
+.pizza {
+  animation-name: movepizza;
+}
+
+.strawberry-yogurt {
+  animation-name: movestrawberry-yogurt;
+}
+
+.Pineapple {
+  animation-name: movePineapple;
+}
+
+.salmon {
+  animation-name: moveImage13;
+}
+
+.square {
+  animation-name: movesquare;
+}
+
+.chickpo {
+  animation-name: movechickpo;
+}
+
+.rotate-image {
+  animation-name: rotate;
+}
+
+@keyframes moveburger {
+  0% {
+    transform: translate(0, 30vh) rotate(0deg);
+  }
+  50% {
+    transform: translate(calc(100vw - 50%), calc(100vh - 100%)) rotate(360deg);
+  }
+  100% {
+    transform: translate(0, 30vh) rotate(0deg);
+  }
+}
+
+@keyframes movepinkdonut {
+  0% {
+    transform: translate(0, 40vw) rotate(0deg);
+  }
+  50% {
+    transform: translate(calc(100vw - 40%), calc(50vh - 40%)) rotate(360deg);
+  }
+  100% {
+    transform: translate(0, 40vw) rotate(0deg);
+  }
+}
+
+@keyframes movedonut {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(100vw, 60vh) rotate(360deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+@keyframes movespavlova {
+    0% {
+      transform: translate(20vh, 0) rotate(0deg);
+    }
+    50% {
+      transform: translate(80vw, 30vh) rotate(360deg);
+    }
+    100% {
+        transform: translate(20vh, 0) rotate(0deg);
+      }
+}
+
+@keyframes movelime {
+  0% {
+    transform: translate(80vh, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(100vw,100vh) rotate(360deg);
+  }
+  100% {
+    transform: translate(80vh, 0) rotate(0deg);
+  }
+}
+
+@keyframes movenoodles {
+  0% {
+    transform: translate(calc(100vw - 50%), calc(100vh - 100%)) rotate(0deg);
+  }
+  50% {
+    transform: translate(30vw, 0) rotate(360deg);
+  }
+  100% {
+    transform: translate(calc(100vw - 50%), calc(100vh - 100%)) rotate(0deg);
+  }
+}
+
+@keyframes moveoatmeal {
+  0% {
+    transform: translate(100vw, 100vh) rotate(0deg);
+  }
+  50% {
+    transform: translate(0, 20vw) rotate(360deg);
+  }
+  100% {
+    transform: translate(100vw, 100vh) rotate(0deg);
+  }
+}
+
+@keyframes movepizza {
+  0% {
+    transform: translate(calc(60vw - 100%), calc(100vh - 100%)) rotate(0deg);
+  }
+  50% {
+    transform: translate(50vh, 0) rotate(360deg);
+  }
+  100% {
+    transform: translate(calc(60vw - 100%), calc(100vh - 100%)) rotate(0deg);
+  }
+}
+
+@keyframes movestrawberry-yogurt {
+    0% {
+      transform: translate(100vw, 20vh) rotate(0deg);
+    }
+    50% {
+      transform: translate(100%, calc(50vh - 100%)) rotate(360deg);
+    }
+    100% {
+        transform: translate(100vw, 20vh) rotate(0deg);
+      }
+  }
+
+@keyframes movePineapple {
+  0% {
+    transform: translate(0, 50vh) rotate(0deg);
+  }
+  50% {
+    transform: translate(100vh, 0) rotate(360deg);
+  }
+  100% {
+    transform: translate(0, 50vh) rotate(0deg);
+  }
+}
+
+@keyframes moveImage13 {
+  0% {
+    transform: translate(calc(100vw - 100%), calc(100vh - 100%)) rotate(0deg);
+  }
+  50% {
+    transform: translate(0, 0) rotate(360deg);
+  }
+  100% {
+    transform: translate(calc(100vw - 100%), calc(100vh - 100%)) rotate(0deg);
+  }
+}
+
+@keyframes movesquare {
+  0% {
+    transform: translate(100%, calc(70vh - 100%)) rotate(0deg);
+  }
+  50% {
+    transform: translate(100vw, 0) rotate(360deg);
+  }
+  100% {
+    transform: translate(100%, calc(70vh - 100%)) rotate(0deg);
+  }
+}
+
+@keyframes movechickpo {
+  0% {
+    transform: translate(100vw, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(0, calc(100vh - 100%)) rotate(360deg);
+  }
+  100% {
+    transform: translate(100vw, 0) rotate(0deg);
+  }
+}
+
+@keyframes movetoast {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform:  translate(40vw, 100vh) rotate(360deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}

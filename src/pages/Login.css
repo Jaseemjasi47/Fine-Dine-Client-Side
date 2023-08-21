@@ -1,0 +1,161 @@
+.signup {
+  z-index: 5;
+}
+
+.about-bg {
+  background-color: aliceblue;
+}
+
+.table-card,.not-available {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #772f1a;
+  background-image: linear-gradient(315deg, #772f1a 0%, #f2a65a 74%);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  cursor: pointer; /* Add a pointer cursor to indicate interactivity */
+}
+
+.not-available {
+  opacity: .5;
+}
+
+
+
+.table-card:hover {
+  box-shadow: 0 0 15px #000000; /* Change the spread radius and color on hover */
+}
+
+
+.table-card.selected {
+  box-shadow: 0 0 20px #00ff0d; 
+  opacity: .9;
+  border: 1px solid white;
+  /* background-color: #52b3da; */
+  color: #fff; /* Set the text color to white for better visibility */
+}
+
+.bdy {
+  position: absolute;
+  backdrop-filter: blur(5px); /* Adjust the blur radius as needed */
+  background-color: rgba(240, 248, 255, 0.445);
+  z-index: 7;
+  width: 100vw;
+  height: 86vh;
+}
+
+/*------------------------ Modal Content -----------------*/
+
+.content {
+  padding: 10px;
+  color: black;
+}
+
+.content input{
+  background-color: rgb(19, 24, 23);
+  margin: 5px;
+  margin-left: 18px;
+  align-content: center;
+  border-radius: 3px;
+  border: none;
+  color: aliceblue;
+}
+
+.content input:hover{
+  opacity: .8;
+}
+
+.content .rs{
+  display: flex;
+  padding: 3px;
+  margin-top: 5px;
+  margin-left: 5px;
+}
+
+.resend-btn {
+  border: none;
+  background-color: transparent;
+  transition: .5s;
+}
+
+.resend-btn:hover {
+  color: #313030;
+}
+
+.submit-btn {
+  background-color: #FEA116;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: bold;
+  margin-left: 15px;
+  transition: .5s;
+}
+
+@media (max-width: 991.98px) {
+  .content h2{
+    margin-left: 6px;
+  }
+
+  .content input{
+    margin: 5px;
+    margin-left: 0;
+  }
+
+  .content .rs{
+    margin-left: -10px;
+  }
+
+}
+
+.submit-btn:hover {
+  color: aliceblue;
+  background-color: rgb(236, 132, 4);
+}
+
+/*----------------------- Modal End------------------------------- */
+
+
+/* RestaurantPage.css */
+
+.restaurant-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px auto;
+  max-width: 90vw;
+}
+
+.restaurant-image img {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 10px;
+}
+
+.restaurant-info {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.restaurant-name {
+  margin-left: 10px;
+}
+
+.restaurant-place {
+  margin-left: 10px;
+  font-size: 14px;
+  color: #888;
+}
+
+.restaurant-description {
+  margin-top: 20px;
+  color: #000000;
+  font-size: 16px;
+}
+
+.restaurant-foods {
+  margin-top: 20px;
+  color: #000000;
+  font-size: 16px;
+}

@@ -1,0 +1,33 @@
+/* Modal.css */
+.modal-overlay {
+    position: fixed;
+    top: 40%;
+    left: 30%;
+    z-index: 999;
+    width: 40%;
+    height: 20vh;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.822);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+@media (max-width: 991.98px) {
+  .modal-overlay {
+    top: 45%;
+    left: 17%;
+    width: 60%;
+    height: 20vh;
+  }
+}
+  
+.modal-overlay .btn{
+  color: rgba(0, 0, 0, 0.658);
+  position: absolute;
+  background-color: transparent;
+  border: none;
+  right: -4px;
+  top: -3px;
+}
+  
