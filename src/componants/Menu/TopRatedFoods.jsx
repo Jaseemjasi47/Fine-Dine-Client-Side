@@ -48,7 +48,7 @@ function TopRatedFoods() {
                 <div className="d-flex align-items-center">
                   <img
                     className="flex-shrink-0 img-fluid rounded"
-                    src={`${axiosInstance.defaults.baseURL}${food.image}`}
+                    src={food.image}
                     alt={food.name}
                     style={{ width: "100px" }}
                   />

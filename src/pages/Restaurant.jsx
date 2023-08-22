@@ -151,8 +151,8 @@ function RestaurantPage() {
           <div className='restaurant-image'>
             <img
               className='img-fluid rounded'
-              src={`${axiosInstance.defaults.baseURL}${restaurant.image}`}
-              alt=''
+              src={restaurant.image}
+              alt={restaurant.name}
             />
           </div>
               <div className='d-flex justify-content-between w-100 border-bottom py-2'>
@@ -187,7 +187,7 @@ function RestaurantPage() {
                 <div className="d-flex align-items-center">
                   <img
                     className="flex-shrink-0 img-fluid rounded"
-                    src={`${axiosInstance.defaults.baseURL}${food.image}`}
+                    src={food.image}
                     alt={food.name}
                     style={{ width: "100px" }}
                   />
