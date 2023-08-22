@@ -3,7 +3,7 @@ import Navbar from "../componants/Navbar/Navbar";
 import { axiosInstance } from "../api/apiConfigurations";
 import { MDBSpinner } from "mdb-react-ui-kit";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function BookingPage() {
   const [selectedTable, setSelectedTable] = useState([]);
@@ -15,6 +15,9 @@ function BookingPage() {
   const userData = localStorage.getItem("user");
   const user = JSON.parse(userData);
   const navigate = useNavigate();
+  const location = useLocation();
+  const { selectedData } = location.state;
+  
 
   const [isBookingConfirmed, setIsBookingConfirmed] = useState(false);
   const [selectedFoodsWithQuantity, setSelectedFoodsWithQuantity] = useState(
@@ -59,15 +62,6 @@ function BookingPage() {
   };
 
   useEffect(() => {
-    // Get the URL parameter
-    const urlParams = new URLSearchParams(window.location.search);
-    const encodedSelectedData = urlParams.get("data");
-
-    if (encodedSelectedData) {
-      // Decode and parse the selected data
-      const decodedSelectedData = decodeURIComponent(encodedSelectedData);
-      const selectedData = JSON.parse(decodedSelectedData);
-      console.log(selectedData, "ooooooooooooooooooooooooooooooooooooooo");
       // Set the selected data to the component state
       setSelectedTable(selectedData.selectedTables);
       setSelectedDate(selectedData.selectedDate);
@@ -96,7 +90,7 @@ function BookingPage() {
       };
 
       handleSelectedTables(selectedData.selectedTables); // Call the function with selectedTables
-    }
+
   }, []);
 
   const [foods, setFoods] = useState([]);
@@ -257,7 +251,7 @@ function BookingPage() {
                               />
                               <img
                                 className="flex-shrink-0 img-fluid rounded"
-                                src={`${axiosInstance.defaults.baseURL}${food.image}`}
+                                src={food.image}
                                 alt={food.name}
                                 style={{ width: "100px", cursor: "pointer" }}
                               />

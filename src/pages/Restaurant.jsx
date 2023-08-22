@@ -132,10 +132,7 @@ function RestaurantPage() {
       resname,
       // selectedFoods,
     };
-    // Encode the selected data to be passed as a URL parameter
-    const encodedSelectedData = encodeURIComponent(JSON.stringify(selectedData));
-    // Redirect to the BookingPage with the selected data as URL parameter
-    window.location.href = `/booking?data=${encodedSelectedData}`;
+    navigate('/booking', { state: { selectedData } });
   };
 
  

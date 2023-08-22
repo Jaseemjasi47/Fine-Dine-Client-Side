@@ -95,7 +95,7 @@ function UserBookings() {
                 {/* Render the reservation details */}
                 <img
                   className="flex-shrink-0 img-fluid rounded"
-                  src={`${axiosInstance.defaults.baseURL}${reservation.restaurant_image[0]}`}
+                  src={reservation.restaurant_image[0]}
                   alt={reservation.restaurant_image[1]}
                   style={{ width: "80px" }}
                 />

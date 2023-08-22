@@ -189,7 +189,7 @@ function RestaurantDetails() {
                   Restaurant:{" "}
                   <img
                     className="flex-shrink-0 img-fluid rounded"
-                    src={`${axiosInstance.defaults.baseURL}${selectedRestaurant.license}`}
+                    src={selectedRestaurant.license}
                     alt={selectedRestaurant.name}
                     style={{ width: "200px" }}
                   />
