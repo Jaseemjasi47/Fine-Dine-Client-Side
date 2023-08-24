@@ -3,17 +3,23 @@ import { axiosAuthorized, axiosInstance } from "../../api/apiConfigurations";
 import { MDBSpinner } from "mdb-react-ui-kit";
 import { toast } from "react-toastify";
 import AddFoodModal from "./AddFoodModal";
+import AddTableModal from "./AddTableModal";
 
 function EditRestaurant({ restaurantId, handleGoBack }) {
   const [restaurant, setRestaurantDetails] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [originalRestaurant, setOriginalRestaurant] = useState(null);
   const [addFoodModalVisible, setAddFoodModalVisible] = useState(false);
+  const [addTableModalVisible, setAddTableModalVisible] = useState(false);
+  const [tables, setTables] = useState([]);
 
   const handleAddFood = (newFood) => {
     setFoods([...foods, newFood]);
   };
 
+  const handleAddTable = (newTable) => {
+    setTables([...tables, newTable]);
+  };
 
   const fetchFoodsData = async () => {
     try {
@@ -31,6 +37,21 @@ function EditRestaurant({ restaurantId, handleGoBack }) {
     }
   };
 
+  const fetchTablesData = async () => {
+    try {
+      const response = await axiosInstance.get(
+        `Restaurants/get_restaurants_tables/${restaurantId}/`
+      );
+      setTables(response.data);
+      // setOriginalFoods(response.data);
+      console.log(
+        response.data,
+        "------------------------Tables----------------------"
+      );
+    } catch (error) {
+      console.error("Error fetching Tables data:", error);
+    }
+  };
 
   const fetchRestaurantDetails = async () => {
     try {
@@ -49,17 +70,14 @@ function EditRestaurant({ restaurantId, handleGoBack }) {
     }
   };
 
-
   useEffect(() => {
-    
-
     fetchRestaurantDetails();
     fetchFoodsData();
+    fetchTablesData();
   }, [restaurantId]);
 
   const [foods, setFoods] = useState([]);
   const [originalFoods, setOriginalFoods] = useState([]);
-
 
   const handleEditModeToggle = () => {
     if (editMode) {
@@ -96,7 +114,7 @@ function EditRestaurant({ restaurantId, handleGoBack }) {
     // Perform additional validation if needed
 
     setRestaurantDetails({ ...restaurant, image: newImage });
-    console.log(restaurant,'pppppppppppppppppppppppppppppppppppp');
+    console.log(restaurant, "pppppppppppppppppppppppppppppppppppp");
   };
 
   const handleSaveChanges = async () => {
@@ -107,54 +125,70 @@ function EditRestaurant({ restaurantId, handleGoBack }) {
         place: restaurant.place,
         description: restaurant.description,
       };
-  
+
       // Append the restaurant image if it's changed
       if (restaurant.image) {
         updatedRestaurant.image = restaurant.image;
       }
-  
+
       const updatedFoods = foods.map((food) => ({
         id: food.id,
         name: food.name,
         price: food.price,
         description: food.description,
       }));
-  
+
       const formData = new FormData();
-      formData.append('restaurant', JSON.stringify(updatedRestaurant));
-  
+      formData.append("restaurant", JSON.stringify(updatedRestaurant));
+
       // Append the restaurant image file if it's changed
       if (restaurant.image) {
-        formData.append('restaurant_image', restaurant.image);
+        formData.append("restaurant_image", restaurant.image);
       }
-  
+
       updatedFoods.forEach((food) => {
-        formData.append('foods[]', JSON.stringify(food)); // Use 'foods[]' instead of `foods[${food.id}]`
+        formData.append("foods[]", JSON.stringify(food)); // Use 'foods[]' instead of `foods[${food.id}]`
         if (food.image) {
           formData.append(`food_image_${food.id}`, food.image);
         }
       });
-  
+
       const response = await axiosInstance.patch(
         `Restaurants/update_restaurant/${restaurantId}/`,
         formData,
         {
           headers: {
-            'Content-Type': 'multipart/form-data',
+            "Content-Type": "multipart/form-data",
           },
         }
       );
-  
+
       if (response.status === 200) {
-        toast.success('Edited Successfully');
+        toast.success("Edited Successfully");
         setEditMode(false);
         // Handle success, redirect or update UI as needed
       } else {
-        toast.error('Error editing restaurant');
+        toast.error("Error editing restaurant");
       }
     } catch (error) {
-      console.error('Error editing restaurant:', error);
-      toast.error('Error editing restaurant');
+      console.error("Error editing restaurant:", error);
+      toast.error("Error editing restaurant");
+    }
+  };
+
+  const handleDeleteRestaurant = async (id) => {
+    if (window.confirm("Are you sure you want to delete this food item?")) {
+      try {
+        // Perform the delete operation
+        await axiosAuthorized.delete(`Restaurants/delete-restaurant/${id}/`);
+        handleGoBack();
+        toast.success("Restaurant Deleted Successfully");
+        // Optionally, you can also update your state or take other actions
+      } catch (error) {
+        console.error("Error deleting Restaurant:", error);
+        toast.error("Delete Failed");
+        // Handle error if needed
+      }
     }
   };
 
@@ -163,13 +197,30 @@ function EditRestaurant({ restaurantId, handleGoBack }) {
       try {
         // Perform the delete operation
         await axiosAuthorized.delete(`Restaurants/delete-food/${id}/`);
-        toast.success('Food Deleted Successfully')
+        toast.success("Food Deleted Successfully");
         fetchRestaurantDetails();
         fetchFoodsData();
         // Optionally, you can also update your state or take other actions
       } catch (error) {
         console.error("Error deleting food:", error);
-        toast.error('Delete Failed')
+        toast.error("Delete Failed");
+        // Handle error if needed
+      }
+    }
+  };
+
+  const handleDeleteTable = async (id) => {
+    if (window.confirm("Are you sure you want to delete this Table?")) {
+      try {
+        // Perform the delete operation
+        await axiosAuthorized.delete(`Restaurants/delete-table/${id}/`);
+        toast.success("Table Deleted Successfully");
+        fetchRestaurantDetails();
+        fetchTablesData();
+        // Optionally, you can also update your state or take other actions
+      } catch (error) {
+        console.error("Error deleting Table:", error);
+        toast.error("Delete Failed");
         // Handle error if needed
       }
     }
@@ -203,22 +254,29 @@ function EditRestaurant({ restaurantId, handleGoBack }) {
         <button className="btn btn-primary ml-3" onClick={handleEditModeToggle}>
           {editMode ? "Cancel" : "Edit"}
         </button>
-      </h2>
-
-
-
+      <button className="btn btn-primary mr-3 float-end" onClick={()=>handleDeleteRestaurant(restaurant?.id)}>
+          Delete
+        </button>
+        </h2>
 
       {/* Editable mode */}
       {editMode ? (
         <>
+          {addFoodModalVisible && (
+            <AddFoodModal
+              onClose={() => setAddFoodModalVisible(false)}
+              onAddFood={handleAddFood}
+              restaurantId={restaurant?.id}
+            />
+          )}
 
-{addFoodModalVisible && (
-        <AddFoodModal
-          onClose={() => setAddFoodModalVisible(false)}
-          onAddFood={handleAddFood}
-          restaurantId={restaurant?.id}
-        />
-      )}
+          {addTableModalVisible && (
+            <AddTableModal
+              onClose={() => setAddTableModalVisible(false)}
+              onAddTable={handleAddTable}
+              restaurantId={restaurant?.id}
+            />
+          )}
           <div className="my-5 w-50 mx-auto text-center ">
             {/* Restaurant Details */}
             <div className="mb-3">
@@ -273,13 +331,13 @@ function EditRestaurant({ restaurantId, handleGoBack }) {
 
             {/* Add more input fields for other restaurant details */}
             {/* ... */}
-            <h3 className="" >Foods</h3>
+            <h3 className="">Foods</h3>
             <div
-            className="btn btn-primary"
-            onClick={() => setAddFoodModalVisible(true)}
-          >
-            Add Food
-          </div>
+              className="btn btn-primary"
+              onClick={() => setAddFoodModalVisible(true)}
+            >
+              Add Food
+            </div>
           </div>
           {/* Food Details */}
           <div className="row w-100">
@@ -288,7 +346,12 @@ function EditRestaurant({ restaurantId, handleGoBack }) {
                 <label htmlFor={`foodName${index}`} className="form-label">
                   {index + 1}) Food Name
                 </label>
-                <span className="float-end" onClick={()=>handleDeleteFood(food.id)}><i className="fa fa-close"></i></span>
+                <span
+                  className="float-end"
+                  onClick={() => handleDeleteFood(food.id)}
+                >
+                  <i className="fa fa-close"></i>
+                </span>
                 <input
                   type="text"
                   className="form-control"
@@ -339,12 +402,49 @@ function EditRestaurant({ restaurantId, handleGoBack }) {
               </div>
             ))}
           </div>
+          <h3 className="text-center">Tables</h3>
+          <div className="d-flex justify-content-center">
+            <div
+              className="btn btn-primary"
+              onClick={() => setAddTableModalVisible(true)}
+            >
+              Add Table
+            </div>
+          </div>
+          {restaurant ? (
+            <div className="text-center row m-3">
+              {tables.map((table) => (
+                <div
+                  key={table.table_id} // Use the unique 'id' or primary key as the key
+                  className="col-md-4 w-50 mb-3 "
+                >
+                  <div>
+                    <div
+                      className="table-card p-3"
+                      style={{ userSelect: "none" }}
+                    >
+                      <span
+                  className="float-end "
+                  onClick={() => handleDeleteTable(table.id)}
+                >
+                 <i className="fa fa-close" style={{ color: 'black' }}></i>
+                </span>
+                      <h5>Table Number: {table.table_number}</h5>
+                      <h6>Seat Capacity: {table.seat_capacity}</h6>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center my-5">
+              {" "}
+              <MDBSpinner grow className="mx-2" color="warning">
+                <span className="visually-hidden">Loading...</span>
+              </MDBSpinner>
+            </div>
+          )}
         </>
-
-
-
-
-
       ) : (
         <>
           <div className="my-5 restaurant-details">
@@ -419,6 +519,44 @@ function EditRestaurant({ restaurantId, handleGoBack }) {
                       </div>
                     </div>
                   ))}
+
+                  <div
+                    className="text-center mt-3 w-100 wow fadeInUp"
+                    data-wow-delay="0.2s"
+                  >
+                    <h5 className="section-title ff-secondary text-center mt-3 text-primary fw-normal">
+                      Restaurant
+                    </h5>
+                    <h1 className="">Tables</h1>
+                  </div>
+                  {/* Display the tables */}
+                  {restaurant ? (
+                    <div className="text-center row my-3">
+                      {tables.map((table) => (
+                        <div
+                          key={table.table_id} // Use the unique 'id' or primary key as the key
+                          className="col-md-4 w-50 mb-3 "
+                        >
+                          <div>
+                            <div
+                              className="table-card p-3"
+                              style={{ userSelect: "none" }}
+                            >
+                              <h5>Table Number: {table.table_number}</h5>
+                              <h6>Seat Capacity: {table.seat_capacity}</h6>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center my-5">
+                      {" "}
+                      <MDBSpinner grow className="mx-2" color="warning">
+                        <span className="visually-hidden">Loading...</span>
+                      </MDBSpinner>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

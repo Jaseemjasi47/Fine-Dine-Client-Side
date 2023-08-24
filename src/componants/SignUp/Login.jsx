@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './SignUp.css';
 import { axiosInstance } from '../../api/apiConfigurations';
 import { useNavigate, Link } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import 'react-toastify/dist/ReactToastify.css';
 import { setUser } from '../../store/userSlice';
@@ -150,7 +150,6 @@ const errorMessage = (error) => {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 }

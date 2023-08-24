@@ -72,6 +72,7 @@ function AddFoodModal({ restaurantId, onClose, onAddFood }) {
                 placeholder="Food Name"
                 value={newFood.name}
                 onChange={(e) => handleInputChange(e, "name")}
+                required
               />
               <input
                 type="text"
@@ -79,18 +80,21 @@ function AddFoodModal({ restaurantId, onClose, onAddFood }) {
                 placeholder="Food Price"
                 value={newFood.price}
                 onChange={(e) => handleInputChange(e, "price")}
+                required
               />
               <input
                 type="file"
                 className="form-control mb-3"
                 accept="image/*"
                 onChange={handleImageChange}
+                required
               />
               <textarea
                 className="form-control mb-3"
                 placeholder="Food Description"
                 value={newFood.description}
                 onChange={(e) => handleInputChange(e, "description")} 
+                required
               />
             </div>
             <div className="modal-footer">

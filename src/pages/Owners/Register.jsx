@@ -6,22 +6,28 @@ import './Style.css'
 
 function Register() {
 
+  const userData = localStorage.getItem("user");
+  const user = JSON.parse(userData);
   const handleSubmit = async (event) => {
     event.preventDefault();
     // Get form data
-    const formData = new FormData(event.target);
-    console.log('Form data being sent:', formData);
+    const formData = new FormData();
+    formData.append('name', event.target.name.value);
+    formData.append('place', event.target.place.value);
+    formData.append('description', event.target.description.value);
+    formData.append('owner', user.email);
+    formData.append('image', event.target.image.files[0]);
+    formData.append('license', event.target.license.files[0]);
 
     try {
       // Make a POST request to the Django backend
-      const response = await axiosInstance.post(`Restaurants/createrestaurants/`, formData);
-
+      const response = await axiosInstance.post('Restaurants/createrestaurants/', formData);
       // Handle success, show success toast
       toast.success('Restaurant Form submitted successfully');
       console.log('Restaurant created successfully:', response.data);
     } catch (error) {
       // Handle error, show error toast
-      toast.error('Email Not Found As a User');
+      toast.error('Restaurant Form submitted Failed!');
       console.error('Error creating restaurant:', error);
     }
   };
@@ -61,15 +67,6 @@ function Register() {
                   We'll never share your details with anyone else.
                 </small>
               </div>
-
-              <div className="form-group">
-                <label>Email address</label>
-                <input type="email" className="form-control" name="email" placeholder="" required/>
-                <small className="form-text text-muted">
-                  Enter the Email that you Signed In
-                </small>
-              </div>
-
               <div className="form-group">
                 <label>Tell About Your Restaurant</label>
                 <textarea className="form-control" name="description" placeholder="" required/>

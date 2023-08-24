@@ -18,7 +18,7 @@ function Menu() {
       </div>
       <PopularRestaurants/>
       <PopularFoods/>
-      <div className='bg-blue m-3 w-96'>footer</div>
+      {/* <div className='bg-blue m-3 w-96'>footer</div> */}
     </div>
   );
 }
