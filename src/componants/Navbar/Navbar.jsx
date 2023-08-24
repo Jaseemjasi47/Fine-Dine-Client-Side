@@ -3,12 +3,10 @@ import "../../css/bootstrap.min.css";
 import "../../css/style.css";
 import { NavDropdown } from "react-bootstrap";
 import { useNavigate, Link, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { clearUser } from "../../store/userSlice";
 
 function Navbar() {
-  const users = useSelector((state) => state.user);
   const navigate = useNavigate();
   const token = localStorage.getItem("accessToken");
   const location = useLocation();

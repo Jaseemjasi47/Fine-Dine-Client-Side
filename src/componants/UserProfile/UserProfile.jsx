@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import UserBookings from './UserBookings';
-import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
 
 function UserProfile() {
-  const user = useSelector(state => state.user)
+  const userData = localStorage.getItem("user");
+  const user = JSON.parse(userData);
 
   
 
@@ -23,13 +23,13 @@ function UserProfile() {
                     className="img-fluid img-thumbnail mt-4 mb-2"
                     style={{ width: '150px', zIndex: 1 }}
                   />
-                  <button type="button" className="btn btn-outline-dark" data-mdb-ripple-color="dark" style={{ zIndex: 1 }}>
-                    Edit profile
-                  </button>
+                  <Link to="/owner/register" className=" text-center border"  style={{ zIndex: 1, color: 'black' }}>
+                    ADD YOUR RESTAURANT
+                    </Link>
                 </div>
                 <div className="ms-3" style={{ marginTop: '130px' }}>
-                  <h5 style={{color: 'white' }}>Jaseem</h5>
-                  <p className='text-primary ff-secondary'>New York</p>
+                  <h5 style={{color: 'white' }}>{user?.name}</h5>
+                  <p className='text-primary ff-secondary'>{user?.email}</p>
                 </div>
               </div>
               <div className="p-4 text-black" style={{ backgroundColor: '#f8f9fa', width: '84vw' }}>
@@ -37,9 +37,6 @@ function UserProfile() {
                   <div className='mx-3' >
                     <p className="mb-1 h5"></p>
                     <p className="small text-muted mb-0"></p>
-                  </div>
-                  <div className='mx-3'>  
-                  <Link to="/owner/register">If you have a Restaurant yon can register here</Link>
                   </div>
                 </div>
               </div>

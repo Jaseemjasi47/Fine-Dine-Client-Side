@@ -238,14 +238,14 @@ function RestaurantPage() {
                     <div
                   onClick={() => handleTableClick(table.table_id)} // Pass 'id' to the handleTableClick function
                 >
-                  <div className={`table-card p-3 ${selectedTables.includes(table.table_id) ? 'selected' : ''}`}>
+                  <div className={`table-card p-3 ${selectedTables.includes(table.table_id) ? 'selected' : ''}`}   style={{ userSelect: 'none' }}>
                     <h5>Table Number: {table.table_number}</h5>
                     <h6>Seat Capacity: {table.seat_capacity}</h6>
                      <h6>Available</h6> 
                   </div>
                   </div> :
                   <div>
-                  <div className='not-available p-3 '>
+                  <div className='not-available p-3 ' style={{ userSelect: 'none' }}>
                   <h5>Table Number: {table.table_number}</h5>
                   <h6>Seat Capacity: {table.seat_capacity}</h6>
                    <h6> Not Available</h6> 

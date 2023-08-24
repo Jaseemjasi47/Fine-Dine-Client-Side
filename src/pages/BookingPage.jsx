@@ -199,7 +199,8 @@ function BookingPage() {
                   selectedTable.map((table) => (
                     <div
                       key={table.id}
-                      className="col ml-3 mb-2 table-card pt-4 text-center"
+                      className="col ml-3 mb-2 table-card pt-4 text-center "
+                      style={{ userSelect: 'none' }}
                     >
                       <h6>Table Number:</h6>
                       <p className="">{table.table_number}</p>

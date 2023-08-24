@@ -11,12 +11,10 @@ function Bookings({ restaurantId, handleShowDetails }) {
   const [confirmDecline, setConfirmDecline] = useState(false);
   const [reservationConfirmations, setReservationConfirmations] = useState({});
 
-  
-
   const toggleConfirmDecline = (reservationId) => {
     setReservationConfirmations((prevState) => ({
       ...prevState,
-      [reservationId]: !prevState[reservationId]
+      [reservationId]: !prevState[reservationId],
     }));
   };
 
@@ -35,19 +33,19 @@ function Bookings({ restaurantId, handleShowDetails }) {
     }
   };
 
-
   useEffect(() => {
     fetchRestaurantsData();
   }, [restaurantId]);
 
-
   const handleApproval = async (reservationId, newStatus) => {
-
     try {
-      const response = await axiosAuthorized.post('Restaurants/update_reservation_status/', {
-        reservation_id: reservationId,
-        new_status: newStatus,
-      });
+      const response = await axiosAuthorized.post(
+        "Restaurants/update_reservation_status/",
+        {
+          reservation_id: reservationId,
+          new_status: newStatus,
+        }
+      );
 
       // Handle success or show a message to the user
       console.log(response.data.message);
@@ -55,15 +53,24 @@ function Bookings({ restaurantId, handleShowDetails }) {
       fetchRestaurantsData();
     } catch (error) {
       // Handle error or show an error message
-      toast.error('Status Update Failed');
-      console.error('An error occurred:', error);
+      toast.error("Status Update Failed");
+      console.error("An error occurred:", error);
     }
   };
+  const [showPending, setShowPending] = useState(false); // State to track the filter
+  const [showPaid, setShowPaid] = useState(false);
 
+
+  const filteredItems = restaurants.filter(
+    (restaurant) =>
+      (!showPending || restaurant.status === 'pending') &&
+      (!showPaid || restaurant.payment_status === 'paid')
+  );
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = restaurants.slice(indexOfFirstItem, indexOfLastItem);
+  // const currentItems = restaurants.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
 
   // Handle pagination button clicks
   const handleNextPage = () => {
@@ -72,6 +79,15 @@ function Bookings({ restaurantId, handleShowDetails }) {
 
   const handlePrevPage = () => {
     setCurrentPage(currentPage - 1);
+  };
+
+  
+  const togglePendingFilter = () => {
+    setShowPending(!showPending); // Toggle the filter state
+  };
+
+  const togglePaidFilter = () => {
+    setShowPaid(!showPaid); // Toggle the paid filter state
   };
 
   return (
@@ -83,8 +99,23 @@ function Bookings({ restaurantId, handleShowDetails }) {
         <h1 className="text-uppercase mr-5 mt-3 text-center">Bookings</h1>
         <div></div> {/* Empty div for spacing */}
       </div>
+      <div className="row mx-3 gap-2">
+        {/* <div className="btn border col">Date</div> */}
+        <div
+          className={`btn border col ${showPending ? "btn-primary" : ""}`}
+          onClick={togglePendingFilter}
+        >
+          Pendings
+        </div>
+        <div
+        className={`btn border col ${showPaid ? 'btn-primary' : ''}`}
+        onClick={togglePaidFilter}
+      >
+        Paid
+      </div>
+      </div>
       <div className="m-3 ">
-        <table className="table table-striped table-dark table-scroll">
+        <table className="table table-striped table-dark">
           <thead>
             <tr className="text-uppercase">
               {/* <th scope='col'>Restaurant</th> */}
@@ -98,57 +129,79 @@ function Bookings({ restaurantId, handleShowDetails }) {
             </tr>
           </thead>
           <tbody>
-            {currentItems.map((restaurant) => (
-              <tr key={restaurant.id}>
-                {/* <th scope='row'>{restaurant.restaurant}</th> */}
-                <td>{restaurant.user.name}</td>
-                <td className="d-flex">
-                  {restaurant.tables.map((table, index) => (
-                    <p key={index}>({table.table_no})</p>
-                  ))}
-                </td>
-                <td>{restaurant.tables[0].date}</td>
-                <td>{restaurant.tables[0].time_slot}</td>
-                <td>
-                  {restaurant.totalAmount !== null &&
-                  restaurant.totalAmount !== 0 ? (
-                    `₹${restaurant.totalAmount}`
-                  ) : (
-                    <span>No Foods</span>
-                  )}
-                </td>
-                <td>{restaurant.payment_status}</td>
-                <td>
-                  {restaurant.status === "pending" ? (
-                    <>
-                    <div
-                  className="btn btn-success mr-3"
-                  onClick={() => handleApproval(restaurant.id, 'Confirmed')}
-                >
-                  <i className="fa fa-thumbs-up" aria-hidden="true"></i>
-                </div>
-                <div
-                  className="btn btn-danger"
-                  onClick={() => toggleConfirmDecline(restaurant.id)}
-                >
-                  <i className="fa fa-ban" aria-hidden="true"></i>
-                </div>
-                {reservationConfirmations[restaurant.id] && (
-                      <div className="card-body">
-                        <p className="card-text">
-                          Are you sure you want to decline this reservation?
-                        </p>
-                        <button className="btn ml-2" onClick={() => toggleConfirmDecline(restaurant.id)}>No</button>
-                        <button className="btn " onClick={() => handleApproval(restaurant.id, 'Declined')}>yes</button>
-                      </div>
-                )}
-                  </>
-                  ) : (
-                    <>{restaurant.status}</>
-                  )}
-                </td>
-              </tr>
-            ))}
+            {currentItems
+              // .filter(
+              //   (restaurant) =>
+              //     (!showPending || restaurant.status === 'pending') &&
+              //     (!showPaid || restaurant.payment_status === 'paid')
+              // )
+              .map((restaurant) => (
+                <tr key={restaurant.id}>
+                  {/* <th scope='row'>{restaurant.restaurant}</th> */}
+                  <td>{restaurant.user.name}</td>
+                  <td className="d-flex">
+                    {restaurant.tables.map((table, index) => (
+                      <p key={index}>({table.table_no})</p>
+                    ))}
+                  </td>
+                  <td>{restaurant.tables[0].date}</td>
+                  <td>{restaurant.tables[0].time_slot}</td>
+                  <td>
+                    {restaurant.totalAmount !== null &&
+                    restaurant.totalAmount !== 0 ? (
+                      `₹${restaurant.totalAmount}`
+                    ) : (
+                      <span>No Foods</span>
+                    )}
+                  </td>
+                  <td>{restaurant.payment_status}</td>
+                  <td>
+                    {restaurant.status === "pending" ? (
+                      <>
+                        <div
+                          className="btn btn-success mr-3"
+                          onClick={() =>
+                            handleApproval(restaurant.id, "Confirmed")
+                          }
+                        >
+                          <i className="fa fa-thumbs-up" aria-hidden="true"></i>
+                        </div>
+                        <div
+                          className="btn btn-danger"
+                          onClick={() => toggleConfirmDecline(restaurant.id)}
+                        >
+                          <i className="fa fa-ban" aria-hidden="true"></i>
+                        </div>
+                        {reservationConfirmations[restaurant.id] && (
+                          <div className="card-body">
+                            <p className="card-text">
+                              Are you sure you want to decline this reservation?
+                            </p>
+                            <button
+                              className="btn ml-2"
+                              onClick={() =>
+                                toggleConfirmDecline(restaurant.id)
+                              }
+                            >
+                              No
+                            </button>
+                            <button
+                              className="btn "
+                              onClick={() =>
+                                handleApproval(restaurant.id, "Declined")
+                              }
+                            >
+                              yes
+                            </button>
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      <>{restaurant.status}</>
+                    )}
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
         <div className="pagination">
