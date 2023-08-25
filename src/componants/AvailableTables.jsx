@@ -4,9 +4,9 @@ import { axiosInstance } from '../api/apiConfigurations';
 import { Link } from 'react-router-dom';
 import { MDBSpinner } from 'mdb-react-ui-kit';
 
-function AvailableTables({ location, hotel, date, time, persons }) {
+function AvailableTables({ location, hotel }) {
   const [availableRestaurants, setAvailableRestaurants] = useState([]);
-  const hotelName = hotel.trim() ? hotel : `Hotels In ${location}`;
+  const hotelName = hotel.trim() ? hotel : `Located In ${location}`;
   const [loading, setLoading] = useState(true);
   const [fetchError, setFetchError] = useState(false);
 
@@ -46,7 +46,7 @@ else if (fetchError) {
     <div>
         <div className="d-flex justify-content-center mt-5 align-items-center" >
             <div className="text-center">
-                <h3>Available Tables for {persons} persons at {time} on {date}</h3>
+                <h3>Available Restaurants</h3>
                 <p>{hotelName}</p>
                 {/* Display more information about the available tables */}
             </div>

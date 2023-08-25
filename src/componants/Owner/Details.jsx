@@ -63,7 +63,7 @@ function Details({ handleShowBookings }) {
           <button className="btn btn-primary mr-3 float-end" onClick={() => {
       navigate('/owner/register');
     }}>
-      Add Restaurant
+      Add
     </button>
           </h1>
           <div

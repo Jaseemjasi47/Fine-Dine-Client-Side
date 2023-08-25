@@ -6,6 +6,7 @@ function Home() {
   return (
     <div>
       <Navbar />
+      <div className="h1">helooooooooooooooooooooooooooo</div>
       <Banner />
     </div>
   );

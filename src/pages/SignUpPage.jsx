@@ -6,11 +6,13 @@ import './Login.css'
 
 function SignUpPage() {
   return (
-    <div>
+    <>
+    <Navbar/>
+    <div >
       <Background/>
-      <Navbar/>
-      <SignUp className="signup" />
+      <SignUp className="signup " />
     </div>
+    </>
   )
 }
 

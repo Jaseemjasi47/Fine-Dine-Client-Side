@@ -144,10 +144,10 @@ export default function SignUp() {
   
 
   return (
-    <div className='container '>
+    <div className='container'>
       <div className={`${ isModalOpen ? 'bddy' : ''}`}></div>
       <div className="d-flex justify-content-center">
-        <div className="card">
+        <div className="card mb-5">
           <div className="card-header">
             <h3>Sign Up</h3>
             <div className="d-flex justify-content-end social_icon">
@@ -230,12 +230,13 @@ export default function SignUp() {
       </div>
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         <div className="content">
-          <h2>Enter The OTP</h2>
-          <input type='text' placeholder="OTP"
+          <h2 className='mb-3'>Enter The OTP</h2>
+          <input type='text' placeholder="Enter OTP Here"
                   value={otp}
                   onChange={handleOtpChange}
+                  className='my-4'
                   required ></input>
-          <div className="rs">
+          <div className="rs m-2">
           <button onClick={handleResendOtp} className='resend-btn' >Resend OTP?</button>
           <button onClick={handleOtpSubmit} className='submit-btn'>SUBMIT</button>
           </div>
