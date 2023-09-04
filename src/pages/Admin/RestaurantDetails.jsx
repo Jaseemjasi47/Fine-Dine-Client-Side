@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { axiosAuthorized, axiosInstance } from "../../api/apiConfigurations";
 import Sidebar from "../../componants/Admin/Sidebar";
-import { MDBSpinner } from 'mdb-react-ui-kit';
+import { MDBSpinner } from "mdb-react-ui-kit";
 import "../../componants/Admin/Style.css";
 import { toast } from "react-toastify";
 
@@ -80,11 +80,45 @@ function RestaurantDetails() {
                 <th scope="col">Approver</th>
               </tr>
             </thead>
-            {loading && 
-            <div className='text-center my-5' > <MDBSpinner grow className='mx-2' color='warning'>
-        <span className='visually-hidden'>Loading...</span>
-      </MDBSpinner></div>
-}
+            {loading && (
+              <>
+                  <th scope="row">
+                    <div className="text-center d-flex justify-content-center align-items-center my-5">
+                      <MDBSpinner grow className="" color="warning">
+                        <span className="visually-hidden">Loading...</span>
+                      </MDBSpinner>
+                    </div>
+                  </th>
+                  <th>
+                    <div className="text-center d-flex justify-content-center align-items-center my-5">
+                      <MDBSpinner grow className="mx-2" color="warning">
+                        <span className="visually-hidden">Loading...</span>
+                      </MDBSpinner>
+                    </div>
+                  </th>
+                  <th>
+                    <div className="text-center d-flex justify-content-center align-items-center my-5">
+                      <MDBSpinner grow className="mx-2" color="warning">
+                        <span className="visually-hidden">Loading...</span>
+                      </MDBSpinner>
+                    </div>
+                  </th>
+                  <th>
+                    <div className="text-center d-flex justify-content-center align-items-center my-5">
+                      <MDBSpinner grow className="mx-2" color="warning">
+                        <span className="visually-hidden">Loading...</span>
+                      </MDBSpinner>
+                    </div>
+                  </th>
+                  <th>
+                    <div className="text-center d-flex justify-content-center align-items-center my-5">
+                      <MDBSpinner grow className="mx-2" color="warning">
+                        <span className="visually-hidden">Loading...</span>
+                      </MDBSpinner>
+                    </div>
+                  </th>
+              </>
+            )}
             <tbody>
               {currentItems?.map((restaurant) => (
                 <tr key={restaurant.id}>

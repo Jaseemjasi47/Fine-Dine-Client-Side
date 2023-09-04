@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { axiosAuthorized } from "../../api/apiConfigurations";
 import Sidebar from "../../componants/Admin/Sidebar";
+import { MDBSpinner } from "mdb-react-ui-kit";
 import "../../componants/Admin/Style.css";
 
 function UserDetails() {
   const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6; // Number of items to display per page
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchUsers();
@@ -16,6 +18,7 @@ function UserDetails() {
     try {
       const response = await axiosAuthorized.get(`Restaurants/users/`);
       setUsers(response.data);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching users:", error);
     }
@@ -49,6 +52,45 @@ function UserDetails() {
                 <th scope="col">Actions</th>
               </tr>
             </thead>
+            {loading && (
+              <>
+                  <th scope="row">
+                    <div className="text-center d-flex justify-content-center align-items-center my-5">
+                      <MDBSpinner grow className="" color="warning">
+                        <span className="visually-hidden">Loading...</span>
+                      </MDBSpinner>
+                    </div>
+                  </th>
+                  <th>
+                    <div className="text-center d-flex justify-content-center align-items-center my-5">
+                      <MDBSpinner grow className="mx-2" color="warning">
+                        <span className="visually-hidden">Loading...</span>
+                      </MDBSpinner>
+                    </div>
+                  </th>
+                  <th>
+                    <div className="text-center d-flex justify-content-center align-items-center my-5">
+                      <MDBSpinner grow className="mx-2" color="warning">
+                        <span className="visually-hidden">Loading...</span>
+                      </MDBSpinner>
+                    </div>
+                  </th>
+                  <th>
+                    <div className="text-center d-flex justify-content-center align-items-center my-5">
+                      <MDBSpinner grow className="mx-2" color="warning">
+                        <span className="visually-hidden">Loading...</span>
+                      </MDBSpinner>
+                    </div>
+                  </th>
+                  <th>
+                    <div className="text-center d-flex justify-content-center align-items-center my-5">
+                      <MDBSpinner grow className="mx-2" color="warning">
+                        <span className="visually-hidden">Loading...</span>
+                      </MDBSpinner>
+                    </div>
+                  </th>
+              </>
+            )}
             <tbody>
               {currentItems.map((user) => (
                 <tr key={user.id}>
