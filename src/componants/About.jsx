@@ -87,9 +87,6 @@ function About() {
         </div>
       </div>
     </div>
-    <div className="footer ml-5 mt-5">    
-    <Link to="/owner/register">If you have a Restaurant yon can register here</Link>
-    </div>
     </>
   )
 }

@@ -11,6 +11,7 @@ function RestaurantDetails() {
   const itemsPerPage = 3; // Number of items to display per page
   const userData = localStorage.getItem("user");
   const user = JSON.parse(userData);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchRestaurants();
@@ -20,7 +21,7 @@ function RestaurantDetails() {
     try {
       const response = await axiosAuthorized.get(`Restaurants/restaurants/`);
       setRestaurants(response.data);
-
+      setLoading(false);
       console.log(response.data, "[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[---");
     } catch (error) {
       console.error("Error fetching restaurants:", error);
@@ -78,6 +79,11 @@ function RestaurantDetails() {
                 <th scope="col">Approver</th>
               </tr>
             </thead>
+            {loading && 
+            <div className='text-center my-5' > <MDBSpinner grow className='mx-2' color='warning'>
+        <span className='visually-hidden'>Loading...</span>
+      </MDBSpinner></div>
+}
             <tbody>
               {currentItems?.map((restaurant) => (
                 <tr key={restaurant.id}>
